@@ -11,10 +11,8 @@ $Repo = "subhradeepsarkae-ai/noir"
 $BinDir = "$env:LOCALAPPDATA\noir\bin"
 $ExePath = "$BinDir\nr.exe"
 
-# Ensure target directory exists
 New-Item -ItemType Directory -Path $BinDir -Force | Out-Null
 
-# Check if running from repo (local build) vs remote install
 $LocalExe = Join-Path (Split-Path $PSScriptRoot -Parent) "target\release\nr.exe"
 if (Test-Path $LocalExe) {
     Write-Host "Installing from local build..." -ForegroundColor Cyan
@@ -30,15 +28,13 @@ if (Test-Path $LocalExe) {
     Remove-Item $zip
 }
 
-# Add to PATH if not already there
 $userPath = [Environment]::GetEnvironmentVariable("PATH", "User")
 if ($userPath -notlike "*$BinDir*") {
     [Environment]::SetEnvironmentVariable("PATH", "$userPath;$BinDir", "User")
     Write-Host "Added $BinDir to user PATH" -ForegroundColor Green
 }
 
-# Also update current session
 $env:PATH = "$env:PATH;$BinDir"
 
-Write-Host "✓ nr installed to $ExePath" -ForegroundColor Green
-Write-Host "  Run 'nr --help' to get started." -ForegroundColor Cyan
+Write-Host "OK nr installed to $ExePath" -ForegroundColor Green
+Write-Host "Run 'nr --help' to get started." -ForegroundColor Cyan
